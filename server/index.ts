@@ -32,15 +32,26 @@ app.post(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const limiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  max: 1000,
-  message: 'Troppe richieste da questo IP, riprova più tardi',
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  skipSuccessfulRequests: true,
+  message: 'Troppi tentativi di login, riprova tra 15 minuti',
   standardHeaders: true,
   legacyHeaders: false,
 });
 
-app.use('/api/', limiter);
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: 'Troppe richieste, riprova tra 15 minuti',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.use('/api/auth/login', authLimiter);
+app.use('/api/auth/register', authLimiter);
+app.use('/api/', apiLimiter);
 
 app.use('/api/auth', authRoutes);
 app.use('/api/payment', paymentRoutes);
