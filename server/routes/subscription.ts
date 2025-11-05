@@ -9,11 +9,13 @@ router.get('/status', authenticateToken, async (req: AuthRequest, res: Response)
   try {
     const userId = req.user!.id;
 
-    const { data: subscription } = await supabase
+    const { data: subscription, error: subError } = await supabase
       .from('subscriptions')
       .select('*')
       .eq('user_id', userId)
       .maybeSingle();
+
+    console.log('Subscription query result:', { subscription, error: subError, userId });
 
     if (!subscription) {
       return res.json({
@@ -30,6 +32,15 @@ router.get('/status', authenticateToken, async (req: AuthRequest, res: Response)
     const daysLeft = expiresAt
       ? Math.max(0, Math.ceil((expiresAt.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)))
       : 0;
+
+    console.log('Subscription check:', {
+      status: subscription.status,
+      expires_at: subscription.expires_at,
+      expiresAt,
+      now,
+      isActive,
+      daysLeft
+    });
 
     res.json({
       active: isActive,
