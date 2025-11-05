@@ -1,5 +1,5 @@
 import { Router, Response } from 'express';
-import { stripe } from '../config/stripe';
+import { stripe, STRIPE_ENABLED } from '../config/stripe';
 import { supabase } from '../config/database';
 import { authenticateToken, AuthRequest } from '../middleware/auth';
 
@@ -45,6 +45,10 @@ router.get('/status', authenticateToken, async (req: AuthRequest, res: Response)
 });
 
 router.post('/cancel', authenticateToken, async (req: AuthRequest, res: Response) => {
+  if (!STRIPE_ENABLED || !stripe) {
+    return res.status(503).json({ error: 'Stripe non configurato' });
+  }
+
   try {
     const userId = req.user!.id;
 
@@ -79,6 +83,10 @@ router.post('/cancel', authenticateToken, async (req: AuthRequest, res: Response
 });
 
 router.get('/portal', authenticateToken, async (req: AuthRequest, res: Response) => {
+  if (!STRIPE_ENABLED || !stripe) {
+    return res.status(503).json({ error: 'Stripe non configurato' });
+  }
+
   try {
     const userId = req.user!.id;
 

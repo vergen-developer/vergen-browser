@@ -1,11 +1,14 @@
 import { Router, Response } from 'express';
-import { stripe, STRIPE_PRICE_ID, STRIPE_WEBHOOK_SECRET } from '../config/stripe';
+import { stripe, STRIPE_PRICE_ID, STRIPE_WEBHOOK_SECRET, STRIPE_ENABLED } from '../config/stripe';
 import { supabase } from '../config/database';
 import { authenticateToken, AuthRequest } from '../middleware/auth';
 
 const router = Router();
 
 router.post('/create-checkout', authenticateToken, async (req: AuthRequest, res: Response) => {
+  if (!STRIPE_ENABLED || !stripe) {
+    return res.status(503).json({ error: 'Stripe non configurato' });
+  }
   try {
     const userId = req.user!.id;
 
@@ -71,6 +74,10 @@ router.post('/create-checkout', authenticateToken, async (req: AuthRequest, res:
 });
 
 router.post('/webhook', async (req, res) => {
+  if (!STRIPE_ENABLED || !stripe) {
+    return res.status(503).json({ error: 'Stripe non configurato' });
+  }
+
   const sig = req.headers['stripe-signature'] as string;
 
   let event;
