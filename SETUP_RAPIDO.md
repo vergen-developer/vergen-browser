@@ -14,8 +14,48 @@
 git init
 git add .
 git commit -m "Initial commit - VerGen Browser"
-git remote add origin https://github.com/TUO_USERNAME/vergen-browser.git
+git remote add origin https://github.com/vergen-developer/vergen-browser.git
 git push -u origin main
+```
+
+**Repository Pubblica o Privata?**
+
+✅ **PUBBLICA** (CONSIGLIATO):
+- Script funziona subito senza configurazione
+- Clone diretto sulla VPS con `git clone`
+- Il .env con chiavi sensibili NON viene committato (è nel .gitignore)
+
+⚠️ **PRIVATA** (serve configurazione SSH):
+- Codice non visibile pubblicamente
+- Serve aggiungere SSH key della VPS su GitHub
+- Vedi istruzioni sotto
+
+**Se scegli repository PRIVATA, fai questo PRIMA dello script VPS:**
+
+```bash
+# 1. SSH nella VPS
+ssh root@192.99.145.87
+
+# 2. Genera SSH key
+ssh-keygen -t ed25519 -C "vps@vergen"
+# Premi Enter 3 volte (nessuna password)
+
+# 3. Mostra la chiave pubblica
+cat ~/.ssh/id_ed25519.pub
+# Copia tutto l'output
+
+# 4. Su GitHub:
+# Settings > SSH and GPG keys > New SSH key
+# Incolla la chiave e salva
+
+# 5. Test connessione
+ssh -T git@github.com
+# Dovrebbe dire: "Hi vergen-developer!"
+```
+
+Poi quando lo script chiede "URL repository", usa:
+```
+git@github.com:vergen-developer/vergen-browser.git
 ```
 
 ---
@@ -27,13 +67,15 @@ git push -u origin main
 ssh root@192.99.145.87
 
 # Esegui script automatico
-wget https://raw.githubusercontent.com/TUO_USERNAME/vergen-browser/main/VPS_BACKEND_ONLY.sh
+wget https://raw.githubusercontent.com/vergen-developer/vergen-browser/main/VPS_BACKEND_ONLY.sh
 sudo bash VPS_BACKEND_ONLY.sh
 ```
 
 **Lo script chiederà:**
 
-1. **URL repository GitHub**: Incolla l'URL del tuo repo
+1. **URL repository GitHub**:
+   - Se PUBBLICA: `https://github.com/vergen-developer/vergen-browser.git`
+   - Se PRIVATA: `git@github.com:vergen-developer/vergen-browser.git`
 2. **Esporre porta 3000?**: Rispondi `y` (sì)
 3. **Hai un dominio per API?**: Rispondi `n` (per ora usiamo IP)
 
