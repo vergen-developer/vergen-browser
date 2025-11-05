@@ -34,7 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
-  max: 100,
+  max: 1000,
   message: 'Troppe richieste da questo IP, riprova più tardi',
   standardHeaders: true,
   legacyHeaders: false,
