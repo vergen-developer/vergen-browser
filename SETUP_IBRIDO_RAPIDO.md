@@ -13,7 +13,7 @@
 ssh root@TUO_IP_VPS
 
 # 2. Download script
-wget https://raw.githubusercontent.com/TUO_USERNAME/vergen-browser/main/VPS_BACKEND_ONLY.sh
+wget https://github.com/vergen-developer/vergen-browser/blob/aaa9df9bf79901071c972656eb55812db3074c2b/VPS_BACKEND_ONLY.sh
 
 # 3. Esegui
 sudo bash VPS_BACKEND_ONLY.sh
