@@ -1,7 +1,7 @@
 import { Router, Response } from 'express';
-import { stripe, STRIPE_ENABLED } from '../config/stripe';
-import { supabase } from '../config/database';
-import { authenticateToken, AuthRequest } from '../middleware/auth';
+import { stripe, STRIPE_ENABLED } from '../config/stripe.js';
+import { supabase } from '../config/database.js';
+import { authenticateToken, AuthRequest } from '../middleware/auth.js';
 
 const router = Router();
 

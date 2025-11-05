@@ -2,9 +2,9 @@ import { Router, Response } from 'express';
 import axios from 'axios';
 import { HttpProxyAgent } from 'http-proxy-agent';
 import { HttpsProxyAgent } from 'https-proxy-agent';
-import { supabase } from '../config/database';
-import { authenticateToken, AuthRequest } from '../middleware/auth';
-import { validateURL } from '../middleware/security';
+import { supabase } from '../config/database.js';
+import { authenticateToken, AuthRequest } from '../middleware/auth.js';
+import { validateURL } from '../middleware/security.js';
 
 const router = Router();
 

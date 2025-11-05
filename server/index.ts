@@ -4,10 +4,10 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 
-import authRoutes from './routes/auth';
-import paymentRoutes from './routes/payment';
-import subscriptionRoutes from './routes/subscription';
-import proxyRoutes from './routes/proxy';
+import authRoutes from './routes/auth.js';
+import paymentRoutes from './routes/payment.js';
+import subscriptionRoutes from './routes/subscription.js';
+import proxyRoutes from './routes/proxy.js';
 
 dotenv.config();
 
