@@ -67,14 +67,6 @@ router.post('/', authenticateToken, async (req: AuthRequest, res: Response) => {
       return res.status(400).json({ error: urlValidation.error });
     }
 
-    const hasActiveSubscription = await checkActiveSubscription(userId);
-    if (!hasActiveSubscription) {
-      return res.status(403).json({
-        error: 'Abbonamento non attivo',
-        message: 'Il tuo abbonamento è scaduto. Rinnova per continuare a navigare.',
-      });
-    }
-
     const normalizedUrl = url.startsWith('http') ? url : `https://${url}`;
 
     const { httpAgent, httpsAgent } = getProxyAgents();
