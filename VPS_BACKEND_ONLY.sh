@@ -164,7 +164,7 @@ PROXY_AUTH_PASS=
 # Application
 NODE_ENV=production
 PORT=3000
-APP_URL=https://your-frontend.vercel.app
+APP_URL=https://vergen-browser-proxy-7yzs.bolt.host
 EOF
 
 echo -e "${GREEN}✓ File .env creato${NC}"
