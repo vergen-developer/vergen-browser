@@ -27,21 +27,6 @@ const getProxyAgents = () => {
   };
 };
 
-const checkActiveSubscription = async (userId: string): Promise<boolean> => {
-  const { data: subscription } = await supabase
-    .from('subscriptions')
-    .select('status, expires_at')
-    .eq('user_id', userId)
-    .maybeSingle();
-
-  if (!subscription) return false;
-
-  const now = new Date();
-  const expiresAt = subscription.expires_at ? new Date(subscription.expires_at) : null;
-
-  return subscription.status === 'active' && expiresAt !== null && expiresAt > now;
-};
-
 const logProxySession = async (
   userId: string,
   url: string,
