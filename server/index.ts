@@ -9,7 +9,10 @@ import paymentRoutes from './routes/payment.js';
 import subscriptionRoutes from './routes/subscription.js';
 import proxyRoutes from './routes/proxy.js';
 
-dotenv.config();
+// Load .env only if SUPABASE_URL is not already set (not set by PM2)
+if (!process.env.SUPABASE_URL) {
+  dotenv.config();
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
